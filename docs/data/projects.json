@@ -82,7 +82,7 @@
     },
     {
       "key": "partner_scoping",
-      "label": "Partner(s) for hazard assessment",
+      "label": "Scoping partner",
       "type": "string",
       "source": "manual_review"
     },
