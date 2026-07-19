@@ -130,6 +130,28 @@ h1 {
   font-size: 1rem;
 }
 
+.ssbd-check {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+  font-family: var(--sans);
+  color: var(--ink);
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  border: 1.5px solid var(--line);
+  border-radius: 3px;
+  background: white;
+  white-space: nowrap;
+}
+.ssbd-check:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+.ssbd-check input { accent-color: var(--accent); cursor: pointer; }
+
 select, .col-toggle-btn {
   padding: 0.6rem 0.9rem;
   border: 1.5px solid var(--line);
@@ -315,14 +337,12 @@ footer .edit-cta:hover { background: var(--accent); }
 
 <div class="controls">
   <div class="search-box">
-    <input type="text" id="search" placeholder="Search acronym, title, coordinator, country…" autocomplete="off">
+    <input type="text" id="search" placeholder="Search acronym, title, coordinator, focus category…" autocomplete="off">
   </div>
-  <select id="filter-focus">
-    <option value="">All focus categories</option>
-  </select>
-  <select id="filter-usecases">
-    <option value="">All use cases</option>
-  </select>
+  <label class="ssbd-check">
+    <input type="checkbox" id="filter-ssbd">
+    SSbD in call text only
+  </label>
   <div class="col-picker-wrap">
     <button class="col-toggle-btn" id="col-picker-btn">Columns ▾</button>
     <div class="col-picker" id="col-picker"></div>
@@ -338,7 +358,7 @@ footer .edit-cta:hover { background: var(--accent); }
 </div>
 
 <footer>
-  <p><strong>About this table.</strong> Acronyms, titles, websites, and coordinators were compiled manually from public SSbD project communications. Funding call/topic ID, start/end dates, coordinator country, and budget figures are pulled from <a href="https://cordis.europa.eu" target="_blank" rel="noopener">CORDIS</a>, the European Commission's research results database. Partner-role columns (technology development, risk assessment, environmental/social LCA, AI, MCDA scoring, industrial use cases, dissemination, exploitation) are not tagged in CORDIS by role and are filled in through manual review — these are the fields most likely to need a community correction.</p>
+  <p><strong>About this table.</strong> All project data — acronyms, full titles, coordinators, project websites, funding call/topic IDs, start/end dates, coordinator countries, and budget figures — is sourced from <a href="https://cordis.europa.eu" target="_blank" rel="noopener">CORDIS</a>, the European Commission's R&I results database. Partner-role columns (technology development, risk assessment, environmental/social LCA, AI, MCDA scoring, industrial use cases, dissemination, exploitation) are not tagged in CORDIS by role and are filled in through manual expert review — these are the fields most likely to need a community correction. The "SSbD in call text" flag indicates whether Safe and Sustainable by Design was explicitly named in the funding call topic.</p>
   <p>Spot something missing or wrong? Open an issue using the template below and it will be reviewed before merging into the dataset.</p>
   <a class="edit-cta" href="https://github.com/JonciH/ssbd-table/issues/new?template=propose-edit.yml" id="propose-link-2">+ Propose an edit on GitHub</a>
 <p style="margin-top:1.25rem; font-size:0.8rem;">
@@ -355,15 +375,16 @@ footer .edit-cta:hover { background: var(--accent); }
 const DATA_URL = 'data/projects.json';
 let DATA = null;
 let visibleColumns = new Set();
-let sortState = { key: 'acronym', dir: 'asc' };
+let sortState = { key: 'start_date', dir: 'asc' };
 
 const DEFAULT_VISIBLE = [
-  'acronym', 'full_title', 'start_date', 'end_date',
-  'coordinator', 'focus_category', 'use_cases', 'soc', 'project_website', 'cordis_url'
+  'acronym', 'full_title', 'start_date', 'end_date', 'coordinator',
+  'focus_category', 'ssbd_in_call', 'eu_contribution_eur',
+  'use_cases', 'soc', 'project_website', 'cordis_url'
 ];
 
 const HIDDEN_COLUMNS = new Set([
-  'coordinator_country', 'total_cost_eur', 'eu_contribution_eur', 'source', 'cordis_id'
+  'coordinator_country', 'total_cost_eur', 'source', 'cordis_id'
 ]);
 
 function fmtDate(d) {
@@ -379,6 +400,12 @@ function fmtCost(n) {
 }
 
 function cellContent(col, value) {
+  if (col.key === 'ssbd_in_call') {
+    if (value === null || value === undefined) return { html: '<span style="color:#b8b2a3">?</span>', empty: false };
+    return value
+      ? { html: '<span style="color:var(--accent);font-weight:600">✓ Yes</span>', empty: false }
+      : { html: '<span style="color:#b8b2a3">No</span>', empty: false };
+  }
   if (value === null || value === undefined || value === '') {
     return { html: '', empty: true };
   }
@@ -416,39 +443,15 @@ function buildColumnPicker() {
 }
 
 function buildFilters() {
-  const focusSel = document.getElementById('filter-focus');
-  const usecasesSel = document.getElementById('filter-usecases');
-  const focuses = new Set();
-  const usecases = new Set();
-  DATA.projects.forEach(p => {
-    if (p.focus_category) focuses.add(p.focus_category);
-    if (p.use_cases) {
-      p.use_cases.split(/[;,]/).map(s => s.trim()).filter(Boolean).forEach(u => usecases.add(u));
-    }
-  });
-  [...focuses].sort().forEach(f => {
-    const opt = document.createElement('option');
-    opt.value = f; opt.textContent = f;
-    focusSel.appendChild(opt);
-  });
-  [...usecases].sort().forEach(u => {
-    const opt = document.createElement('option');
-    opt.value = u; opt.textContent = u;
-    usecasesSel.appendChild(opt);
-  });
+  // No dropdowns — just the SSbD checkbox, handled in getFilteredSorted
 }
 
 function getFilteredSorted() {
   const q = document.getElementById('search').value.trim().toLowerCase();
-  const focus = document.getElementById('filter-focus').value;
-  const usecase = document.getElementById('filter-usecases').value;
+  const ssbd_only = document.getElementById('filter-ssbd').checked;
 
   let rows = DATA.projects.filter(p => {
-    if (focus && p.focus_category !== focus) return false;
-    if (usecase) {
-      const uc = (p.use_cases || '').split(/[;,]/).map(s => s.trim());
-      if (!uc.includes(usecase)) return false;
-    }
+    if (ssbd_only && p.ssbd_in_call !== true) return false;
     if (q) {
       const haystack = [
         p.acronym, p.full_title, p.coordinator, p.coordinator_country,
@@ -463,7 +466,8 @@ function getFilteredSorted() {
     let av = a[sortState.key], bv = b[sortState.key];
     if (av === null || av === undefined) av = '';
     if (bv === null || bv === undefined) bv = '';
-    if (typeof av === 'number' || typeof bv === 'number') {
+    if (typeof av === 'boolean') { av = av ? 1 : 0; bv = bv ? 1 : 0; }
+    else if (typeof av === 'number' || typeof bv === 'number') {
       av = parseFloat(av) || 0; bv = parseFloat(bv) || 0;
     } else {
       av = String(av).toLowerCase(); bv = String(bv).toLowerCase();
@@ -541,8 +545,7 @@ function init(data) {
   renderTable();
 
   document.getElementById('search').addEventListener('input', renderTable);
-  document.getElementById('filter-focus').addEventListener('change', renderTable);
-  document.getElementById('filter-usecases').addEventListener('change', renderTable);
+  document.getElementById('filter-ssbd').addEventListener('change', renderTable);
 
   const btn = document.getElementById('col-picker-btn');
   const picker = document.getElementById('col-picker');

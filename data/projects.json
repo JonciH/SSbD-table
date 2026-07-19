@@ -45,6 +45,12 @@
       "source": "manual_review"
     },
     {
+      "key": "ssbd_in_call",
+      "label": "SSbD in call text",
+      "type": "boolean",
+      "source": "analysis"
+    },
+    {
       "key": "ssbd_assessment_scope",
       "label": "SSbD assessment scope",
       "type": "string",
@@ -200,7 +206,8 @@
       "cordis_id": "814530",
       "cordis_url": "https://cordis.europa.eu/project/id/814530",
       "source": "",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "HARMLESS",
@@ -230,7 +237,8 @@
       "cordis_id": "953183",
       "cordis_url": "https://cordis.europa.eu/project/id/953183",
       "source": "",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "DIAGONAL",
@@ -260,7 +268,8 @@
       "cordis_id": "953152",
       "cordis_url": "https://cordis.europa.eu/project/id/953152",
       "source": "",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "NICKEFFECT",
@@ -290,7 +299,8 @@
       "cordis_id": "101058076",
       "cordis_url": "https://cordis.europa.eu/project/id/101058076",
       "source": "",
-      "soc": "Platinum (Pt)"
+      "soc": "Platinum (Pt)",
+      "ssbd_in_call": true
     },
     {
       "acronym": "IRISS",
@@ -320,7 +330,8 @@
       "cordis_id": "101058245",
       "cordis_url": "https://cordis.europa.eu/project/id/101058245",
       "source": "",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "NOVA",
@@ -350,7 +361,8 @@
       "cordis_id": "101058554",
       "cordis_url": "https://cordis.europa.eu/project/id/101058554",
       "source": "",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "NOUVEAU",
@@ -380,7 +392,8 @@
       "cordis_id": "101058784",
       "cordis_url": "https://cordis.europa.eu/project/id/101058784",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "PARASOL",
@@ -410,7 +423,8 @@
       "cordis_id": "101072881",
       "cordis_url": "https://cordis.europa.eu/project/id/101072881",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": false
     },
     {
       "acronym": "AgriLoop",
@@ -440,7 +454,8 @@
       "cordis_id": "101081776",
       "cordis_url": "https://cordis.europa.eu/project/id/101081776",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": false
     },
     {
       "acronym": "ZeroF",
@@ -470,7 +485,8 @@
       "cordis_id": "101092164",
       "cordis_url": "https://cordis.europa.eu/project/id/101092164",
       "source": "CORDIS",
-      "soc": "PFAS"
+      "soc": "PFAS",
+      "ssbd_in_call": true
     },
     {
       "acronym": "PROPLANET",
@@ -500,7 +516,8 @@
       "cordis_id": "101091842",
       "cordis_url": "https://cordis.europa.eu/project/id/101091842",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "BIO-SUSHY",
@@ -530,7 +547,8 @@
       "cordis_id": "101091464",
       "cordis_url": "https://cordis.europa.eu/project/id/101091464",
       "source": "CORDIS",
-      "soc": "PFAS"
+      "soc": "PFAS",
+      "ssbd_in_call": true
     },
     {
       "acronym": "TORNADO",
@@ -560,7 +578,8 @@
       "cordis_id": "101091944",
       "cordis_url": "https://cordis.europa.eu/project/id/101091944",
       "source": "CORDIS",
-      "soc": "PFAS"
+      "soc": "PFAS",
+      "ssbd_in_call": true
     },
     {
       "acronym": "ACCORDs",
@@ -590,7 +609,8 @@
       "cordis_id": "101092796",
       "cordis_url": "https://cordis.europa.eu/project/id/101092796",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "SAFETYFANS",
@@ -620,7 +640,8 @@
       "cordis_id": "101103082",
       "cordis_url": "https://cordis.europa.eu/project/id/101103082",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": false
     },
     {
       "acronym": "SAFARI",
@@ -650,7 +671,8 @@
       "cordis_id": "101135965",
       "cordis_url": "https://cordis.europa.eu/project/id/101135965",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "SSbD4CheM",
@@ -680,7 +702,8 @@
       "cordis_id": "101138475",
       "cordis_url": "https://cordis.europa.eu/project/id/101138475",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "TOXBOX",
@@ -710,7 +733,8 @@
       "cordis_id": "101138387",
       "cordis_url": "https://cordis.europa.eu/project/id/101138387",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "AI-TranspWood",
@@ -740,7 +764,8 @@
       "cordis_id": "101138191",
       "cordis_url": "https://cordis.europa.eu/project/id/101138191",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "CHIASMA",
@@ -770,7 +795,8 @@
       "cordis_id": "101137613",
       "cordis_url": "https://cordis.europa.eu/project/id/101137613",
       "source": "CORDIS",
-      "soc": "PFAS; Nano-pesticides"
+      "soc": "PFAS; Nano-pesticides",
+      "ssbd_in_call": true
     },
     {
       "acronym": "PINK",
@@ -800,7 +826,8 @@
       "cordis_id": "101137809",
       "cordis_url": "https://cordis.europa.eu/project/id/101137809",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "CheMatSustain",
@@ -830,7 +857,8 @@
       "cordis_id": "101137990",
       "cordis_url": "https://cordis.europa.eu/project/id/101137990",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "INSIGHT",
@@ -860,7 +888,8 @@
       "cordis_id": "101137742",
       "cordis_url": "https://cordis.europa.eu/project/id/101137742",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "ANALYST",
@@ -890,7 +919,8 @@
       "cordis_id": "101138548",
       "cordis_url": "https://cordis.europa.eu/project/id/101138548",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "INTEGRANO",
@@ -920,7 +950,8 @@
       "cordis_id": "101138414",
       "cordis_url": "https://cordis.europa.eu/project/id/101138414",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "SUNRISE",
@@ -950,7 +981,8 @@
       "cordis_id": "101137324",
       "cordis_url": "https://cordis.europa.eu/project/id/101137324",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "SURFs UP",
@@ -980,7 +1012,8 @@
       "cordis_id": "101157586",
       "cordis_url": "https://cordis.europa.eu/project/id/101157586",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": false
     },
     {
       "acronym": "PENGUIN",
@@ -1010,7 +1043,8 @@
       "cordis_id": "101130000",
       "cordis_url": "https://cordis.europa.eu/project/id/101130000",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "BIONEER",
@@ -1040,7 +1074,8 @@
       "cordis_id": "101157779",
       "cordis_url": "https://cordis.europa.eu/project/id/101157779",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": false
     },
     {
       "acronym": "PROMOFER",
@@ -1070,7 +1105,8 @@
       "cordis_id": "101157239",
       "cordis_url": "https://cordis.europa.eu/project/id/101157239",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": false
     },
     {
       "acronym": "Polymers-5B",
@@ -1100,7 +1136,8 @@
       "cordis_id": "101157840",
       "cordis_url": "https://cordis.europa.eu/project/id/101157840",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": false
     },
     {
       "acronym": "BioSusTex",
@@ -1130,7 +1167,8 @@
       "cordis_id": "101135372",
       "cordis_url": "https://cordis.europa.eu/project/id/101135372",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": false
     },
     {
       "acronym": "BioPhenom",
@@ -1160,7 +1198,8 @@
       "cordis_id": "101135107",
       "cordis_url": "https://cordis.europa.eu/project/id/101135107",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": false
     },
     {
       "acronym": "BioINSouth",
@@ -1190,7 +1229,8 @@
       "cordis_id": "101156363",
       "cordis_url": "https://cordis.europa.eu/project/id/101156363",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": false
     },
     {
       "acronym": "SUBBIMATT",
@@ -1220,7 +1260,8 @@
       "cordis_id": "101129911",
       "cordis_url": "https://cordis.europa.eu/project/id/101129911",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "REMHub",
@@ -1250,7 +1291,8 @@
       "cordis_id": "101177493",
       "cordis_url": "https://cordis.europa.eu/project/id/101177493",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "PharmEco",
@@ -1280,7 +1322,8 @@
       "cordis_id": "101165889",
       "cordis_url": "https://cordis.europa.eu/project/id/101165889",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": false
     },
     {
       "acronym": "PLANETS",
@@ -1310,7 +1353,8 @@
       "cordis_id": "101177608",
       "cordis_url": "https://cordis.europa.eu/project/id/101177608",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "Alchemissts",
@@ -1340,7 +1384,8 @@
       "cordis_id": "101178074",
       "cordis_url": "https://cordis.europa.eu/project/id/101178074",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "RADAR",
@@ -1370,7 +1415,8 @@
       "cordis_id": "101178148",
       "cordis_url": "https://cordis.europa.eu/project/id/101178148",
       "source": "CORDIS",
-      "soc": "Bisphenol A; Nonylphenol"
+      "soc": "Bisphenol A; Nonylphenol",
+      "ssbd_in_call": true
     },
     {
       "acronym": "BIOSAFIRE",
@@ -1400,7 +1446,8 @@
       "cordis_id": "101178218",
       "cordis_url": "https://cordis.europa.eu/project/id/101178218",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "DESIDERATA",
@@ -1430,7 +1477,8 @@
       "cordis_id": "101178011",
       "cordis_url": "https://cordis.europa.eu/project/id/101178011",
       "source": "CORDIS",
-      "soc": "Medium Chain Chlorinated Paraffin"
+      "soc": "Medium Chain Chlorinated Paraffin",
+      "ssbd_in_call": true
     },
     {
       "acronym": "RESTORE",
@@ -1460,7 +1508,8 @@
       "cordis_id": "101192272",
       "cordis_url": "https://cordis.europa.eu/project/id/101192272",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": false
     },
     {
       "acronym": "ENKORE",
@@ -1490,7 +1539,8 @@
       "cordis_id": "101166707",
       "cordis_url": "https://cordis.europa.eu/project/id/101166707",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "GUESS-WHy",
@@ -1520,7 +1570,8 @@
       "cordis_id": "101192392",
       "cordis_url": "https://cordis.europa.eu/project/id/101192392",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": false
     },
     {
       "acronym": "PARC",
@@ -1550,7 +1601,8 @@
       "cordis_id": "101057014",
       "cordis_url": "https://cordis.europa.eu/project/id/101057014",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": false
     },
     {
       "acronym": "M2DESCO",
@@ -1580,7 +1632,8 @@
       "cordis_id": "101138397",
       "cordis_url": "https://cordis.europa.eu/project/id/101138397",
       "source": "CORDIS",
-      "soc": ""
+      "soc": "",
+      "ssbd_in_call": true
     },
     {
       "acronym": "SiToLub",
@@ -1610,7 +1663,8 @@
       "cordis_id": "101138807",
       "cordis_url": "https://cordis.europa.eu/project/id/101138807",
       "source": "CORDIS",
-      "soc": "PFAS (PTFE, PFPE); Benzotriazole; Medium Chain Chlorinated Paraffin"
+      "soc": "PFAS (PTFE, PFPE); Benzotriazole; Medium Chain Chlorinated Paraffin",
+      "ssbd_in_call": true
     }
   ]
 }
