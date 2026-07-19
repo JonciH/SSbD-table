@@ -358,8 +358,8 @@ let visibleColumns = new Set();
 let sortState = { key: 'acronym', dir: 'asc' };
 
 const DEFAULT_VISIBLE = [
-  'acronym', 'full_title', 'topic_id',
-  'coordinator', 'focus_category', 'project_website'
+  'acronym', 'full_title', 'start_date', 'end_date',
+  'coordinator', 'focus_category', 'use_cases', 'soc', 'project_website'
 ];
 
 const HIDDEN_COLUMNS = new Set([
@@ -449,7 +449,7 @@ function getFilteredSorted() {
     if (q) {
       const haystack = [
         p.acronym, p.full_title, p.coordinator, p.coordinator_country,
-        p.focus_category, p.topic_id
+        p.focus_category, p.topic_id, p.use_cases, p.soc
       ].join(' ').toLowerCase();
       if (!haystack.includes(q)) return false;
     }
