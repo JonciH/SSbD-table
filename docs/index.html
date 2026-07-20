@@ -254,6 +254,10 @@ tbody td {
   vertical-align: top;
   max-width: 260px;
 }
+tbody td.date-cell {
+  white-space: nowrap;
+  min-width: 100px;
+}
 
 tbody tr:hover { background: var(--accent-soft); }
 
@@ -379,16 +383,15 @@ let sortState = { key: 'start_date', dir: 'asc' };
 
 const DEFAULT_VISIBLE = [
   'acronym', 'full_title', 'topic_id', 'start_date', 'end_date',
-  'coordinator', 'coordinator_country', 'focus_category', 'ssbd_in_call',
-  'eu_contribution_eur', 'total_cost_eur', 'use_cases', 'soc',
-  'solutions', 'project_website', 'cordis_url',
+  'coordinator', 'project_website', 'focus_category',
+  'total_cost_eur', 'use_cases', 'soc', 'solutions', 'cordis_url',
   'partners_tech_dev', 'partner_scoping', 'partners_risk_assessment',
   'partners_env_lca', 'partners_social_lca', 'partner_ai', 'partner_mcda',
   'partners_industrial', 'partner_dissemination', 'partner_exploitation',
-  'cordis_id', 'source'
+  'cordis_id'
 ];
 
-const HIDDEN_COLUMNS = new Set([]);
+const HIDDEN_COLUMNS = new Set(['coordinator_country', 'ssbd_in_call', 'eu_contribution_eur', 'source']);
 
 function fmtDate(d) {
   if (!d) return '';
@@ -524,6 +527,7 @@ function renderTable() {
       const { html, empty, costCell } = cellContent(col, p[col.key]);
       if (col.key === 'acronym') td.classList.add('acronym-cell');
       if (costCell) td.classList.add('cost-cell');
+      if (col.type === 'date' || col.key === 'start_date' || col.key === 'end_date') td.classList.add('date-cell');
       if (empty) {
         td.classList.add('empty-cell');
         td.textContent = '';
