@@ -322,6 +322,10 @@ footer .edit-cta:hover { background: var(--accent); }
     <input type="checkbox" id="filter-ssbd" checked>
     SSbD core projects only
   </label>
+  <label class="ssbd-check">
+    <input type="checkbox" id="filter-active">
+    Active projects only
+  </label>
   <div class="col-picker-wrap">
     <button class="col-toggle-btn" id="col-picker-btn">Columns ▾</button>
     <div class="col-picker" id="col-picker"></div>
@@ -444,9 +448,15 @@ function buildFilters() {}
 function getFilteredSorted() {
   const q = document.getElementById('search').value.trim().toLowerCase();
   const ssbd_only = document.getElementById('filter-ssbd').checked;
+  const active_only = document.getElementById('filter-active').checked;
+  const today = new Date().toISOString().slice(0, 10);
 
   let rows = DATA.projects.filter(p => {
     if (ssbd_only && p.ssbd_in_call !== true) return false;
+    if (active_only) {
+      if (!p.end_date) return false;
+      if (p.end_date < today) return false;
+    }
     if (q) {
       const haystack = [
         p.acronym, p.full_title, p.coordinator, p.coordinator_country,
@@ -540,6 +550,7 @@ function init(data) {
 
   document.getElementById('search').addEventListener('input', renderTable);
   document.getElementById('filter-ssbd').addEventListener('change', renderTable);
+  document.getElementById('filter-active').addEventListener('change', renderTable);
   
   const btn = document.getElementById('col-picker-btn');
   const picker = document.getElementById('col-picker');
