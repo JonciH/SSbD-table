@@ -1,86 +1,138 @@
 # SSbD Project Tracker
 
-A community-maintained, sortable reference table of EU Horizon-funded **Safe and Sustainable by Design (SSbD)** research projects — built for LCA practitioners, consortium partners, and EC project officers who need one map of who is doing what, where.
+A community-maintained, open reference database of EU Horizon-funded research projects working within the **Safe and Sustainable by Design (SSbD)** framework — built to give LCA practitioners, consortium partners, policy officers, and researchers a single, transparent map of who is doing what across the European SSbD landscape.
 
-**Live site:** `https://JonciH.github.io/ssbd-table/` (after you complete setup below)
+**Live site:** [joncih.github.io/SSbD-table](https://joncih.github.io/SSbD-table/)
 
-## What's in this repo
+---
+
+## Why does this exist?
+
+The European Commission's SSbD framework has generated a rapidly growing portfolio of Horizon Europe and H2020 projects — covering nanomaterials, coatings, textiles, surfactants, flame retardants, plasticizers, lubricants, pharmaceuticals, bio-based materials, and more. As of mid-2026, over 55 projects are active or completed across these areas.
+
+Despite this activity, there was no single place to answer basic questions like:
+- Which projects are working on PFAS alternatives in coatings?
+- Who is doing social LCA in the SSbD context?
+- Which projects share a funding call and might be natural collaboration partners?
+- Which consortia include risk assessment, LCA, and industrial validation together?
+
+This tracker was built to fill that gap. It is **not** an official European Commission resource — it is a practitioner-maintained dataset, built openly so that project coordinators, researchers, and policy stakeholders can contribute corrections and additions.
+
+---
+
+## What's in the database?
+
+Each project entry covers:
+
+| Field | Source |
+|---|---|
+| Acronym, full title, project website | CORDIS |
+| Funding call / topic ID | CORDIS |
+| Start and end dates | CORDIS |
+| Coordinator and country | CORDIS |
+| Total cost and EU contribution | CORDIS |
+| CORDIS Grant ID and link | CORDIS |
+| Focus category (product group) | Manual classification |
+| SSbD assessment scope | Manual review |
+| Use cases | Manual review |
+| Substitutable Material (SoC) | Manual review |
+| Innovation / solutions | Manual review |
+| Partner roles (tech dev, hazard, risk & exposure, env LCA, social LCA/LCC/TEA, AI, MCDA, industrial, dissemination, exploitation, social acceptance & policy) | Manual review from project presentations and deliverables |
+| SSbD relevant publications | Manual curation |
+| SSbD core project flag | Analysis of call text |
+
+**Partner role columns** (hazard assessment, risk and exposure, environmental LCA, socioeconomics, AI, MCDA/scoring, industrial, dissemination, social acceptance) are **not available from CORDIS** — CORDIS does not tag participants by role. These columns are filled through manual review of project websites, consortium presentations, and deliverables, and are the fields most likely to need community input.
+
+---
+
+## How the data was built
+
+### Step 1 — Project list
+The initial list of 46 projects was derived from Peter Fantke's published chart of EU-funded SSbD projects (CORDIS database, as of February 2025). Additional projects were identified from the EC SSbD Networking Event (Brussels, March 2026) and from newer Horizon calls (CL4-2023, CL4-2024, CL4-INDUSTRY-2025).
+
+### Step 2 — CORDIS data
+Factual fields (dates, coordinator, budget, grant ID, topic ID) were sourced project-by-project from [cordis.europa.eu](https://cordis.europa.eu). For bulk backfill, the [CORDIS open datasets](https://data.europa.eu/data/datasets/cordis-eu-research-projects-under-horizon-europe-2021-2027) on data.europa.eu can be used (see `scripts/fill_cordis_data.py`).
+
+### Step 3 — SSbD classification
+Each project was classified by:
+- **Focus category** — product group cluster (Coatings, Nanomaterials, Flame Retardants, Surfactants, Lubricants, Textiles, Bio-based Materials, Assessment Methods & Digital Tools, etc.)
+- **SSbD core project** flag — whether SSbD was explicitly named in the funding call topic title, or whether the project is part of the established SSbD ecosystem (e.g. PARC, NANORIGO) even if the call predates the exact terminology. Projects marked *No* apply SSbD methodology but were funded under broader calls (bio-based innovation, circular bioeconomy, hydrogen, batteries) where SSbD was not the primary rationale.
+- **Active/completed** — based on the project end date compared to today
+
+### Step 4 — Partner roles
+Partner role columns were filled manually from project consortium presentations, slides from the EC SSbD Networking Event (March 2026), project websites, and publicly available deliverables. Only explicitly stated roles were entered — no inference from diagram positions or assumed roles.
+
+---
+
+## How to propose a correction or addition
+
+This tracker is transparent by design. Changes are proposed through GitHub Issues and reviewed before being applied to the dataset.
+
+1. Click **"Propose an edit"** on the live site, or open an Issue directly using one of the templates:
+   - **Propose an edit** — correct or add data for an existing project
+   - **Add a new SSbD project** — suggest a project that is missing entirely
+2. Include a source (CORDIS link, project website, deliverable, or first-hand knowledge as a consortium member)
+3. The maintainer reviews and applies the change to `data/projects.json`
+4. On the next push to `main`, the site updates automatically within minutes
+
+---
+
+## Repository structure
 
 ```
-data/projects.json         <- single source of truth: all project data
-docs/                       <- the GitHub Pages site (reads docs/data/projects.json)
-docs/index.html              the sortable/filterable table itself
-scripts/fill_cordis_data.py <- script to bulk-fill CORDIS fields for new/blank projects
-.github/workflows/deploy.yml        <- auto-deploys docs/ to GitHub Pages on every push
-.github/ISSUE_TEMPLATE/             <- the "propose an edit" / "add a project" forms
+data/projects.json              ← single source of truth — edit this file
+docs/index.html                 ← the interactive table (GitHub Pages)
+docs/data/projects.json         ← auto-synced copy served by the site (do not edit manually)
+scripts/fill_cordis_data.py     ← bulk-fill CORDIS fields from official open datasets
+.github/workflows/deploy.yml   ← validates data, syncs docs/, deploys to GitHub Pages
+.github/ISSUE_TEMPLATE/        ← propose-edit and new-project issue forms
 ```
 
-### Why two copies of `projects.json`?
+The workflow on every push to `main`:
+1. Validates `data/projects.json` (checks for JSON errors and duplicate acronyms)
+2. Copies it to `docs/data/projects.json`
+3. Deploys `docs/` to GitHub Pages
 
-`data/projects.json` is the file you and the CORDIS script edit. The deploy workflow automatically copies it into `docs/data/projects.json` on every push to `main`, which is what the live site actually fetches. You never need to touch `docs/data/projects.json` by hand — just edit `data/projects.json` and push.
+You never need to touch `docs/data/projects.json` manually.
 
-## One-time setup (do this first)
+---
 
-1. **Create the repo on GitHub** and push this folder's contents to it (see "Pushing this to GitHub" below).
-2. **Enable GitHub Pages**: repo → Settings → Pages → under "Build and deployment", set Source to **GitHub Actions**. The included workflow (`.github/workflows/deploy.yml`) handles the rest.
-3. **Replace placeholders**: search this repo for `JonciH` (in `docs/index.html`, this README, and `.github/ISSUE_TEMPLATE/config.yml`) and swap in your actual GitHub username/org and repo name.
-4. **Push to `main`.** The first push triggers the Action, which validates the data, syncs it into `docs/`, and deploys. Check the *Actions* tab for progress; the site URL appears under Settings → Pages once it succeeds.
+## Filling in missing CORDIS data (bulk script)
 
-## Pushing this to GitHub for the first time
-
-If you don't already have a repo:
+For projects where CORDIS fields are blank, the fill script matches your project list against the official CORDIS bulk exports:
 
 ```bash
-cd ssbd-table
-git init
-git add .
-git commit -m "Initial SSbD project tracker"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/ssbd-table.git
-git push -u origin main
+# Download the Horizon Europe bulk export from:
+# https://data.europa.eu/data/datasets/cordis-eu-research-projects-under-horizon-europe-2021-2027
+# and the H2020 export from:
+# https://data.europa.eu/88u/dataset/cordisH2020projects
+# Unzip and locate the projects.csv file in each download, then:
+
+pip install pandas --break-system-packages
+python3 scripts/fill_cordis_data.py --projects-csv /path/to/horizon_projects.csv
+python3 scripts/fill_cordis_data.py --projects-csv /path/to/h2020_projects.csv
 ```
 
-Then do steps 2–3 above.
+The script only fills in blank fields — it won't overwrite existing data unless you pass `--overwrite`. Check `data/projects_unmatched.txt` afterwards for any projects that didn't match (usually very new projects not yet in the latest monthly CORDIS dump, or acronym spelling differences).
 
-## Filling in the rest of the CORDIS data
+---
 
-Five projects currently have full CORDIS data (topic ID, dates, coordinator country, budget) filled in as a pilot batch; the remaining ones have placeholders. Rather than scraping CORDIS project-by-project, use the official bulk datasets:
+## Setup (first time)
 
-1. Download the relevant bulk export(s) — most SSbD projects are Horizon Europe, a few older ones are H2020:
-   - Horizon Europe: https://data.europa.eu/data/datasets/cordis-eu-research-projects-under-horizon-europe-2021-2027
-   - Horizon 2020: https://data.europa.eu/88u/dataset/cordisH2020projects
-   - Unzip and locate the `...projects.csv` file inside each download.
+1. Fork or clone this repo and push to your own GitHub account
+2. Go to **Settings → Pages** and set Source to **GitHub Actions**
+3. Replace `REPLACE_WITH_YOUR_USERNAME` in `docs/index.html` and `.github/ISSUE_TEMPLATE/config.yml` with your GitHub username
+4. Push to `main` — the Actions workflow will deploy the site automatically
+5. The live URL will appear under Settings → Pages once the first deploy succeeds
 
-2. Run the fill script against each one:
-   ```bash
-   pip install pandas --break-system-packages
-   python3 scripts/fill_cordis_data.py --projects-csv /path/to/horizon_projects.csv
-   python3 scripts/fill_cordis_data.py --projects-csv /path/to/h2020_projects.csv
-   ```
-   The script only fills in *blank* fields — it won't overwrite anything already there (including your own manual corrections) unless you pass `--overwrite`.
+---
 
-3. Check `data/projects_unmatched.txt` afterwards for any acronyms that didn't match (typically projects too new for the latest monthly CORDIS dump, or with a slightly different acronym spelling in the dataset). Look these up manually on https://cordis.europa.eu/search.
+## Data provenance and licence
 
-4. Commit and push — the site updates automatically.
+All CORDIS-sourced fields (acronym, title, coordinator, dates, budget, grant ID, topic) are drawn from the European Commission's [CORDIS database](https://cordis.europa.eu), which is published as open data under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
-## How "edit by request" works
+Partner role data, focus categories, SSbD assessment scopes, and use case classifications are editorial contributions based on publicly available project materials and are released under the same licence.
 
-This is intentionally **not** a live database anyone can write to directly — edits go through review so the table stays trustworthy:
+**Cite as:** [Your Name], *SSbD Project Tracker*, [joncih.github.io/SSbD-table](https://joncih.github.io/SSbD-table/), 2025–2026.
 
-1. Someone notices an error or gap and clicks **"Propose an edit"** on the site (or opens an Issue directly using the *Propose an edit* or *Add a new SSbD project* template).
-2. You get notified, review the suggested change and its source against `data/projects.json`.
-3. If it checks out, edit `data/projects.json` directly (or ask a trusted collaborator to open a Pull Request) and push to `main`. The site updates within a minute or two via the Actions workflow.
-4. Close the Issue, ideally with a one-line note on what changed.
-
-If you'd rather let trusted contributors edit the file directly via Pull Request instead of you applying every change yourself, just enable that by adding them as collaborators — no extra setup needed since `data/projects.json` is a plain JSON file.
-
-## Data provenance
-
-- **Acronym, full title, project website, coordinator (initial name)** — compiled manually from public SSbD project communications.
-- **Funding call / topic ID, start/end date, coordinator country, total cost, EU contribution, CORDIS ID** — sourced from [CORDIS](https://cordis.europa.eu), the European Commission's R&I results database, either fetched directly or via the bulk-data script above.
-- **Focus category, SSbD assessment scope, use cases, solutions, and all partner-role columns** (technology development, scoping, risk assessment, environmental LCA, social LCA, AI, MCDA/SSbD scoring, industrial use cases, dissemination, exploitation) — **not available from CORDIS**, since CORDIS does not tag participants by project role. These are filled in through manual review of project websites, deliverables, and consortium knowledge, and are the columns most likely to need community correction.
-
-## Updating column structure
-
-The table's columns are defined in the `columns` array at the top of `data/projects.json`, not hardcoded in `docs/index.html` — so adding, renaming, or reordering a column only requires editing the JSON, not the page code.
-
+[![CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
