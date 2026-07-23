@@ -289,6 +289,65 @@ footer .edit-cta:hover { background: var(--accent); }
   header, .controls, .table-wrap, footer { padding-left: 1.1rem; padding-right: 1.1rem; }
   .count-pill { margin-left: 0; }
 }
+/* ---------- Deliverables badge + popover ---------- */
+.deliv-badge {
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  padding: 0.15rem 0.65rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.deliv-badge:hover { background: var(--accent); color: var(--paper); }
+
+#deliv-popover {
+  position: absolute;
+  display: none;
+  background: white;
+  border: 1.5px solid var(--line);
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  padding: 0.75rem;
+  width: 340px;
+  max-height: 360px;
+  overflow-y: auto;
+  z-index: 100;
+  font-size: 0.82rem;
+}
+#deliv-popover.open { display: block; }
+.deliv-pop-title {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--line);
+}
+.deliv-pop-item {
+  display: block;
+  padding: 0.35rem 0;
+  border-bottom: 1px dotted var(--line);
+  color: var(--ink);
+  text-decoration: none;
+  line-height: 1.3;
+}
+.deliv-pop-item:last-of-type { border-bottom: none; }
+.deliv-pop-item:hover { color: var(--accent); }
+.deliv-pop-viewall {
+  display: block;
+  margin-top: 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--amber);
+  text-decoration: none;
+  font-weight: 600;
+}
+.deliv-pop-viewall:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -357,6 +416,8 @@ footer .edit-cta:hover { background: var(--accent); }
 
 </footer>
 
+<div id="deliv-popover"></div>
+
 <script>
 const DATA_URL = 'data/projects.json';
 let DATA = null;
@@ -371,7 +432,7 @@ const DEFAULT_VISIBLE = [
   'partner_hazard_safety', 'partners_env_lca', 'partners_social_lca',
   'partner_ai', 'partner_mcda', 'partners_industrial',
   'partner_dissemination', 'partner_exploitation', 'ssbd_publications',
-  'cordis_id'
+  'deliverables', 'cordis_id'
 ];
 
 const HIDDEN_COLUMNS = new Set([
@@ -391,6 +452,10 @@ function fmtCost(n) {
 }
 
 function cellContent(col, value) {
+  if (col.key === 'deliverables') {
+    // handled specially in renderTable (needs DOM + click handlers), just signal empty/non-empty here
+    return { html: '', empty: !(Array.isArray(value) && value.length) };
+  }
   if (col.key === 'ssbd_publications' && value) {
     const pubs = value.split('|').map(s => s.trim()).filter(Boolean);
     const html = pubs.map(pub => {
@@ -525,6 +590,31 @@ function renderTable() {
     const tr = document.createElement('tr');
     cols.forEach(col => {
       const td = document.createElement('td');
+      if (col.key === 'deliverables') {
+        const delivs = Array.isArray(p.deliverables) ? p.deliverables : [];
+        if (!delivs.length) {
+          td.classList.add('empty-cell');
+        } else {
+          const viewAllItem = delivs.find(d => d.title && d.title.startsWith('View all'));
+          const realItems = delivs.filter(d => !(d.title && d.title.startsWith('View all')));
+          let totalCount = realItems.length;
+          if (viewAllItem) {
+            const m = viewAllItem.title.match(/View all (\d+)/);
+            if (m) totalCount = parseInt(m[1], 10);
+          }
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'deliv-badge';
+          btn.textContent = `${totalCount} doc${totalCount === 1 ? '' : 's'}`;
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showDelivPopover(btn, delivs, viewAllItem, p.acronym);
+          });
+          td.appendChild(btn);
+        }
+        tr.appendChild(td);
+        return;
+      }
       const { html, empty, costCell } = cellContent(col, p[col.key]);
       if (col.key === 'acronym') td.classList.add('acronym-cell');
       if (costCell) td.classList.add('cost-cell');
@@ -541,6 +631,40 @@ function renderTable() {
 
   document.getElementById('visible-count').textContent = rows.length;
 }
+
+function showDelivPopover(anchorEl, delivs, viewAllItem, acronym) {
+  const pop = document.getElementById('deliv-popover');
+  const realItems = delivs.filter(d => !(d.title && d.title.startsWith('View all')));
+  let html = `<div class="deliv-pop-title">${acronym} — Deliverables</div>`;
+  html += realItems.map(d =>
+    `<a class="deliv-pop-item" href="${d.url}" target="_blank" rel="noopener">${d.title}</a>`
+  ).join('');
+  if (viewAllItem) {
+    html += `<a class="deliv-pop-viewall" href="${viewAllItem.url}" target="_blank" rel="noopener">${viewAllItem.title} →</a>`;
+  }
+  pop.innerHTML = html;
+  pop.classList.add('open');
+
+  const rect = anchorEl.getBoundingClientRect();
+  const popWidth = 340;
+  let left = rect.left + window.scrollX;
+  if (left + popWidth > window.scrollX + document.documentElement.clientWidth - 16) {
+    left = window.scrollX + document.documentElement.clientWidth - popWidth - 16;
+  }
+  pop.style.left = left + 'px';
+  pop.style.top = (rect.bottom + window.scrollY + 6) + 'px';
+}
+
+document.addEventListener('click', (e) => {
+  const pop = document.getElementById('deliv-popover');
+  if (pop && pop.classList.contains('open') && !pop.contains(e.target) && !e.target.classList.contains('deliv-badge')) {
+    pop.classList.remove('open');
+  }
+});
+document.addEventListener('scroll', () => {
+  const pop = document.getElementById('deliv-popover');
+  if (pop) pop.classList.remove('open');
+}, true);
 
 function init(data) {
   DATA = data;
