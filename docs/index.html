@@ -412,6 +412,8 @@ footer .edit-cta:hover { background: var(--accent); }
   stroke-width: 1.3;
 }
 .wf-node-box.wf-source { stroke: var(--ink-soft); }
+.wf-node-box.wf-yours { stroke: var(--amber); stroke-width: 1.6; }
+.wf-node-label.wf-yours-label { fill: var(--amber); }
 .wf-node-label {
   font-family: var(--mono);
   font-size: 10.5px;
@@ -433,6 +435,9 @@ footer .edit-cta:hover { background: var(--accent); }
 .wf-connector.wf-live {
   stroke: var(--accent);
   stroke-dasharray: none;
+}
+.wf-connector.wf-yours {
+  stroke: var(--amber);
 }
 .wf-final-box {
   fill: var(--accent);
@@ -499,7 +504,7 @@ footer .edit-cta:hover { background: var(--accent); }
     </div>
 
     <div class="header-diagram" aria-hidden="true">
-      <svg viewBox="0 0 460 200" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 460 230" xmlns="http://www.w3.org/2000/svg">
         <text x="0" y="14" class="wf-eyebrow">How this database gets built</text>
 
         <!-- Source node 1: CORDIS -->
@@ -517,21 +522,27 @@ footer .edit-cta:hover { background: var(--accent); }
         <text x="10" y="154" class="wf-node-label">EXTERNAL</text>
         <text x="10" y="165" class="wf-node-sub">project sites · NSC · consortia</text>
 
+        <!-- Source node 4: Your data -->
+        <rect x="0" y="186" width="180" height="36" rx="4" class="wf-node-box wf-yours"/>
+        <text x="10" y="206" class="wf-node-label wf-yours-label">YOUR DATA</text>
+        <text x="10" y="217" class="wf-node-sub">partner input · gets richer with you</text>
+
         <!-- Connectors converging into final node -->
-        <path d="M180,48 C235,48 235,100 290,100" class="wf-connector"/>
-        <path d="M180,100 C245,100 245,100 290,100" class="wf-connector wf-live"/>
-        <path d="M180,152 C235,152 235,100 290,100" class="wf-connector"/>
+        <path d="M180,48 C235,48 235,126 290,126" class="wf-connector"/>
+        <path d="M180,100 C245,100 245,126 290,126" class="wf-connector wf-live"/>
+        <path d="M180,152 C235,152 235,126 290,126" class="wf-connector"/>
+        <path d="M180,204 C235,204 235,126 290,126" class="wf-connector wf-yours"/>
 
         <!-- Final node: COLLABORATION -->
-        <circle cx="290" cy="100" r="0" class="wf-pulse" style="transform-box:fill-box"/>
-        <rect x="290" y="62" width="170" height="78" rx="7" class="wf-final-box"/>
-        <circle cx="454" cy="62" r="3.5" class="wf-pulse" style="transform-box:fill-box; transform-origin:454px 62px"/>
-        <text x="306" y="90" class="wf-final-label">COLLABORATION</text>
-        <text x="306" y="106" class="wf-final-sub">58 projects · searchable</text>
-        <text x="306" y="118" class="wf-final-sub">open PRs welcome</text>
+        <circle cx="290" cy="126" r="0" class="wf-pulse" style="transform-box:fill-box"/>
+        <rect x="290" y="88" width="170" height="78" rx="7" class="wf-final-box"/>
+        <circle cx="454" cy="88" r="3.5" class="wf-pulse" style="transform-box:fill-box; transform-origin:454px 88px"/>
+        <text x="306" y="116" class="wf-final-label">COLLABORATION</text>
+        <text x="306" y="132" class="wf-final-sub">58 projects · searchable</text>
+        <text x="306" y="144" class="wf-final-sub">open PRs welcome</text>
 
         <!-- little corner tick to suggest "always growing" -->
-        <text x="306" y="132" class="wf-final-sub" opacity="0.85">↻ updated as calls close</text>
+        <text x="306" y="158" class="wf-final-sub" opacity="0.85">↻ updated as calls close</text>
       </svg>
     </div>
   </div>
