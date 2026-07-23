@@ -261,7 +261,9 @@ tbody td.date-cell { white-space: nowrap; min-width: 100px; }
 tbody td.title-cell { min-width: 390px; max-width: 390px; }
 tbody td.enddate-cell { white-space: nowrap; min-width: 120px; }
 tbody td.usecases-cell { min-width: 390px; max-width: 390px; }
-tbody td.focus-cell { min-width: 200px; }
+tbody td.innovation-cell { min-width: 390px; max-width: 390px; }
+tbody td.coordinator-cell { min-width: 390px; max-width: 390px; }
+tbody td.slca-cell { min-width: 130px; max-width: 130px; }
 tbody td {
   padding: 0.6rem 0.8rem;
   border-bottom: 1px solid var(--line);
@@ -809,7 +811,9 @@ function renderTable() {
       if (col.key === 'full_title') td.classList.add('title-cell');
       if (col.key === 'end_date') td.classList.add('enddate-cell');
       if (col.key === 'use_cases') td.classList.add('usecases-cell');
-      if (col.key === 'focus_category') td.classList.add('focus-cell');
+      if (col.key === 'solutions') td.classList.add('innovation-cell');
+      if (col.key === 'coordinator') td.classList.add('coordinator-cell');
+      if (col.key === 'partners_social_lca') td.classList.add('slca-cell');
       if (costCell) td.classList.add('cost-cell');
       if (empty) {
         td.classList.add('empty-cell');
