@@ -258,6 +258,10 @@ thead th .arrow {
 thead th.sorted .arrow { opacity: 1; color: var(--amber); }
 
 tbody td.date-cell { white-space: nowrap; min-width: 100px; }
+tbody td.title-cell { font-size: 1.26rem; }
+tbody td.enddate-cell { font-size: 1.26rem; white-space: nowrap; min-width: 120px; }
+tbody td.usecases-cell { font-size: 1.26rem; }
+tbody td.focus-cell { font-size: 1.26rem; }
 tbody td {
   padding: 0.6rem 0.8rem;
   border-bottom: 1px solid var(--line);
@@ -535,7 +539,7 @@ footer .edit-cta:hover { background: var(--accent); }
 
 <div class="controls">
   <div class="search-box">
-    <input type="text" id="search" placeholder="Search acronym, title, coordinator, focus category…" autocomplete="off">
+    <input type="text" id="search" placeholder="Search acronym, title, coordinator, partners, focus…" autocomplete="off">
   </div>
   <label class="ssbd-check">
     <input type="checkbox" id="filter-ssbd" checked>
@@ -679,7 +683,12 @@ function getFilteredSorted() {
     if (q) {
       const haystack = [
         p.acronym, p.full_title, p.coordinator, p.coordinator_country,
-        p.focus_category, p.topic_id, p.use_cases, p.soc
+        p.focus_category, p.topic_id, p.use_cases, p.soc, p.solutions,
+        p.partners_full_list, p.partners_tech_dev, p.partner_scoping,
+        p.partners_risk_assessment, p.partner_hazard_safety, p.partners_env_lca,
+        p.partners_social_lca, p.partner_social_policy, p.partner_ai,
+        p.partner_mcda, p.partners_industrial, p.partner_dissemination,
+        p.partner_exploitation
       ].join(' ').toLowerCase();
       if (!haystack.includes(q)) return false;
     }
@@ -786,6 +795,10 @@ function renderTable() {
       }
       const { html, empty, costCell } = cellContent(col, p[col.key]);
       if (col.key === 'acronym') td.classList.add('acronym-cell');
+      if (col.key === 'full_title') td.classList.add('title-cell');
+      if (col.key === 'end_date') td.classList.add('enddate-cell');
+      if (col.key === 'use_cases') td.classList.add('usecases-cell');
+      if (col.key === 'focus_category') td.classList.add('focus-cell');
       if (costCell) td.classList.add('cost-cell');
       if (empty) {
         td.classList.add('empty-cell');
